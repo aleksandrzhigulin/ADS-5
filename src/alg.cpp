@@ -81,11 +81,9 @@ std::string infx2pstfx(std::string inf) {
     result += stek.pop();
     result += ' ';
   }
-  
   while (result[result.length() - 1] == ' ') {
     result.pop_back();
   }
-  
   return result;
 }
 
