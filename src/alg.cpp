@@ -43,7 +43,7 @@ std::vector<std::string> toTokenArray(std::string s) {
 
 std::string infx2pstfx(std::string inf) {
   std::vector<std::string> arr = toTokenArray(inf);
-  tstack<std::string, 300> stack;
+  TStack<std::string, 300> stek;
   std::string result;
   for (auto i : arr) {
     if (isNum(i[0])) {
@@ -52,34 +52,34 @@ std::string infx2pstfx(std::string inf) {
       continue;
     }
     if (i[0] == ')') {
-      while (stack.get() != "(") {
-        result += stack.pop();
+      while (stek.get() != "(") {
+        result += stek.pop();
         result += ' ';
       }
-      stack.pop();
+      stek.pop();
       continue;
     }
 
     // Если знак операции т.е всё кроме цифры
     if (!isNum(i[0])) {
-      if (stack.isEmpty()
+      if (stek.isEmpty()
           || i[0] == '('
-          || (getPriority(i[0]) > getPriority(stack.get()[0]))) {
-        stack.push(i);
+          || (getPriority(i[0]) > getPriority(stek.get()[0]))) {
+        stek.push(i);
       } else {
-        while (!stack.isEmpty() && getPriority(i[0]) <= getPriority(stack.get()[0])) {
-          result += stack.pop();
+        while (!stek.isEmpty() && getPriority(i[0]) <= getPriority(stek.get()[0])) {
+          result += stek.pop();
           result += ' ';
         }
-        stack.push(i);
+        stek.push(i);
       }
       continue;
     }
   }
 
   // Конец строки
-  while (!stack.isEmpty()) {
-    result += stack.pop();
+  while (!stek.isEmpty()) {
+    result += stek.pop();
     result += ' ';
   }
   return result;
@@ -96,7 +96,7 @@ int doMath(int num1, int num2, char operation) {
 
 int eval(std::string pref) {
   std::string temp;
-  tstack<int, 300> stek;
+  TStack<int, 300> stek;
   for (int i = 0; i < pref.length(); i++) {
     if (isNum(pref[i])) {
       temp += pref[i];
