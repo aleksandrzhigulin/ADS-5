@@ -39,7 +39,6 @@ std::vector<std::string> toTokenArray(std::string s) {
 
   return result;
 }
-
 std::string infx2pstfx(std::string inf) {
   std::vector<std::string> arr = toTokenArray(inf);
   TStack<std::string, 300> stek;
@@ -66,7 +65,8 @@ std::string infx2pstfx(std::string inf) {
           || (getPriority(i[0]) > getPriority(stek.get()[0]))) {
         stek.push(i);
       } else {
-        while (!stek.isEmpty() && getPriority(i[0]) <= getPriority(stek.get()[0])) {
+        while (!stek.isEmpty() &&
+        getPriority(i[0]) <= getPriority(stek.get()[0])) {
           result += stek.pop();
           result += ' ';
         }
@@ -80,6 +80,9 @@ std::string infx2pstfx(std::string inf) {
   while (!stek.isEmpty()) {
     result += stek.pop();
     result += ' ';
+  }
+  if (result[result.length() - 1] == ' ') {
+    result.pop_back();
   }
   return result;
 }
